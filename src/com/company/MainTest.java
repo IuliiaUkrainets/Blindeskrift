@@ -2,9 +2,7 @@ package com.company;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class MainTest {
@@ -13,21 +11,23 @@ public class MainTest {
     public void test(){
         Main main = mock(Main.class);
 
-        when(main.readInputFile("input.txt")).thenReturn("Hello");
+        when(main.readInputFile("input.txt")).thenReturn(new String[]{"Hello"});
 
-        assertEquals(main.readInputFile("input.txt"), "Hello");
+        assertEquals(main.readInputFile("input.txt")[0], "Hello");
     }
 
     @Test
     public void testFilter(){
         Main main = mock(Main.class);
 
-        when(main.readInputFile("input.txt")).thenReturn("the end!");
+        when(main.readInputFile("input.txt")).thenReturn(new String[]{"the", "end!"});
 
-        String text = main.readInputFile("input.txt");
-        String filtered = Main.filter(text);
+        String[] text = main.readInputFile("input.txt");
+        String[] filtered = Main.filter(text);
         for (String value : Main.map.keySet()) {
-            assertFalse(filtered.contains(value));
+            for (String word : filtered) {
+                assertNotEquals(word, value);
+            }
         }
     }
 }

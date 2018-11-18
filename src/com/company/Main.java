@@ -1,5 +1,7 @@
 package com.company;
 
+import javafx.beans.binding.StringBinding;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,15 +47,21 @@ public class Main {
         System.out.println(new Character((char) 10286));
     }
 
-    public String readInputFile(String path) {
+    public String[] readInputFile(String path) {
         return null;
     }
 
-    public String writeOutputFile(String path) {
-        return null;
+    public void writeOutputFile(String path) {
     }
 
-    public static String filter(String text) {
+    public static String[] filter(String[] text) {
+        for (int i = 0; i< text.length; i++) {
+            for (String key : map.keySet()) {
+                if (text[i].equals(key)) {
+                    text[i] = String.valueOf(map.get(key));
+                }
+            }
+        }
         return text;
     }
 }
