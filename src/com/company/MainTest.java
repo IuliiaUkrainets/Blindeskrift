@@ -45,4 +45,20 @@ public class MainTest {
             }
         }
     }
+
+    @Test
+    public void testNumbersFilter(){
+        Main main = mock(Main.class);
+
+        when(main.readInputFile("input.txt")).thenReturn(new String[]{"the", "end", "7"});
+
+        String[] text = main.readInputFile("input.txt");
+        String[] filtered = Main.filter(text);
+        String value = String.join(" ", filtered);
+        for (char c : value.toCharArray()) {
+            if (Character.isDigit(c)) {
+                fail();
+            }
+        }
+    }
 }
