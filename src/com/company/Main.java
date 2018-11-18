@@ -1,6 +1,8 @@
 package com.company;
 
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,13 +66,28 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println(new Character((char) 10286));
+        new Main().writeOutputFile("test", String.valueOf((char) 10286));
     }
 
     public String[] readInputFile(String path) {
         return null;
     }
 
-    public void writeOutputFile(String path) {
+    public void writeOutputFile(String path, String data) {
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(path);
+            fileWriter.write(data);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static String[] filter(String[] text) {
