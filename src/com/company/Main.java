@@ -1,13 +1,15 @@
 package com.company;
 
-import javafx.beans.binding.StringBinding;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
 
     static Map<String, Integer> map = new HashMap<>();
+    static List<String> punctuations = new ArrayList<>();
     static {
         map.put("but", 10243);
         map.put("can", 10249);
@@ -41,6 +43,23 @@ public class Main {
         map.put("in", 10260);
         map.put("was", 10292);
         map.put("to", 10262);
+
+        punctuations.add(",");
+        punctuations.add(";");
+        punctuations.add(":");
+        punctuations.add(".");
+        punctuations.add("!");
+        punctuations.add("(");
+        punctuations.add(")");
+        punctuations.add("?");
+        punctuations.add("/");
+        punctuations.add("#");
+        punctuations.add("’");
+        punctuations.add("-");
+        punctuations.add("-");
+        punctuations.add("_");
+        punctuations.add("\\");
+
     }
 
     public static void main(String[] args) {
@@ -59,6 +78,11 @@ public class Main {
             for (String key : map.keySet()) {
                 if (text[i].equals(key)) {
                     text[i] = String.valueOf(map.get(key));
+                }
+            }
+            for (String item : punctuations) {
+                if (text[i].contains(item)) {
+                    text[i]= text[i].replace(item, "");
                 }
             }
         }
