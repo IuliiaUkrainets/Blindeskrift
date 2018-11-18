@@ -75,6 +75,11 @@ public class Main {
 
     public static String[] filter(String[] text) {
         for (int i = 0; i< text.length; i++) {
+            for (char letter : text[i].toCharArray()){
+                if (Character.isDigit(letter)) {
+                    text[i] = text[i].replace(""+letter, "⠼"+(char)(96+((byte)letter-48)));
+                }
+            }
             for (String key : map.keySet()) {
                 if (text[i].equals(key)) {
                     text[i] = String.valueOf(map.get(key));
