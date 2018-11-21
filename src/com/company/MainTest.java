@@ -11,20 +11,20 @@ public class MainTest {
     public void test(){
         Main main = mock(Main.class);
 
-        when(main.readInputFile("input.txt")).thenReturn(new String[]{"Hello"});
+        when(main.readInputFile("input.txt")).thenReturn("Hello");
 
-        assertEquals(main.readInputFile("input.txt")[0], "Hello");
+        assertEquals(main.readInputFile("input.txt"), "Hello");
     }
 
     @Test
     public void testWordFilter(){
         Main main = mock(Main.class);
 
-        when(main.readInputFile("input.txt")).thenReturn(new String[]{"the", "end!"});
+        when(main.readInputFile("input.txt")).thenReturn("the end!");
 
-        String[] text = main.readInputFile("input.txt");
+        String[] text = main.readInputFile("input.txt").split(" ");
         String[] filtered = Main.filter(text);
-        for (String value : Main.map.keySet()) {
+        for (String value : Main.wordToBraile.keySet()) {
             for (String word : filtered) {
                 assertNotEquals(word, value);
             }
@@ -35,11 +35,11 @@ public class MainTest {
     public void testPunctuationsFilter(){
         Main main = mock(Main.class);
 
-        when(main.readInputFile("input.txt")).thenReturn(new String[]{"the", "?end!"});
+        when(main.readInputFile("input.txt")).thenReturn("the ?end!");
 
-        String[] text = main.readInputFile("input.txt");
+        String[] text = main.readInputFile("input.txt").split(" ");
         String[] filtered = Main.filter(text);
-        for (String value : Main.punctuations) {
+        for (String value : Main.punctuationsToBraile.keySet()) {
             for (String word : filtered) {
                 assertFalse(word.contains(value));
             }
@@ -50,9 +50,9 @@ public class MainTest {
     public void testNumbersFilter(){
         Main main = mock(Main.class);
 
-        when(main.readInputFile("input.txt")).thenReturn(new String[]{"the", "end", "7"});
+        when(main.readInputFile("input.txt")).thenReturn("the end 7");
 
-        String[] text = main.readInputFile("input.txt");
+        String[] text = main.readInputFile("input.txt").split(" ");
         String[] filtered = Main.filter(text);
         String value = String.join(" ", filtered);
         for (char c : value.toCharArray()) {
