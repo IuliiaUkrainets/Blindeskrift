@@ -23,7 +23,7 @@ public class MainTest {
         when(main.readInputFile("input.txt")).thenReturn("the end!");
 
         String[] text = main.readInputFile("input.txt").split(" ");
-        String[] filtered = Main.filter(text);
+        String[] filtered = Main.translate(text);
         for (String value : Main.wordToBraile.keySet()) {
             for (String word : filtered) {
                 assertNotEquals(word, value);
@@ -38,7 +38,7 @@ public class MainTest {
         when(main.readInputFile("input.txt")).thenReturn("the ?end!");
 
         String[] text = main.readInputFile("input.txt").split(" ");
-        String[] filtered = Main.filter(text);
+        String[] filtered = Main.translate(text);
         for (String value : Main.punctuationsToBraile.keySet()) {
             for (String word : filtered) {
                 assertFalse(word.contains(value));
@@ -53,7 +53,7 @@ public class MainTest {
         when(main.readInputFile("input.txt")).thenReturn("the end 7");
 
         String[] text = main.readInputFile("input.txt").split(" ");
-        String[] filtered = Main.filter(text);
+        String[] filtered = Main.translate(text);
         String value = String.join(" ", filtered);
         for (char c : value.toCharArray()) {
             if (Character.isDigit(c)) {
@@ -69,13 +69,26 @@ public class MainTest {
         when(main.readInputFile("input.txt")).thenReturn("The end 7");
 
         String[] text = main.readInputFile("input.txt").split(" ");
-        String[] filtered = Main.filter(text);
+        String[] filtered = Main.translate(text);
         String value = String.join(" ", filtered);
         for (char c : value.toCharArray()) {
-            if (!Character.isLowerCase(c)) {
+            if (Main.isBigLetter(c)) {
                 fail();
             }
         }
+    }
+
+    @Test
+    public void testTranslation() {
+        Main main = mock(Main.class);
+
+        when(main.readInputFile("input.txt")).thenReturn("Hello all.");
+
+        String[] text = main.readInputFile("input.txt").split(" ");
+        String[] filtered = Main.translate(text);
+        String value = String.join(" ", filtered);
+        assertEquals("⠠⠓⠑⠇⠇⠕ ⠁⠇⠇⠲", value);
+
     }
 
 

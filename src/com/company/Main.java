@@ -13,6 +13,10 @@ public class Main {
 
     static Map<String, Integer> wordToBraile = new HashMap<>();
     static Map<String,String> punctuationsToBraile = new HashMap<>();
+
+    private static final String DIGIT_SYMBOL = "⠼";
+    private static final String UPPER_CASE_SYMBOL = "⠠";
+
     static {
         wordToBraile.put("but", 10243);
         wordToBraile.put("can", 10249);
@@ -94,7 +98,7 @@ public class Main {
         System.out.println(new Character((char) 10286));
 
         String[] text = new Main().readInputFile("input.txt").split(" ");
-        new Main().writeOutputFile("test", String.join(" ",filter(text)));
+        new Main().writeOutputFile("test", String.join(" ", translate(text)));
     }
 
     public String readInputFile(String path) {
@@ -124,15 +128,17 @@ public class Main {
         }
     }
 
-    public static String[] filter(String[] text) {
+    public static String[] translate(String[] text) {
         for (int i = 0; i< text.length; i++) {
             for (char letter : text[i].toCharArray()){
                 if (Character.isDigit(letter)) {
-                    text[i] = text[i].replace(""+letter, "⠼"+(char)(96+((byte)letter-48)));
+                    text[i] = text[i].replace(String.valueOf(letter), DIGIT_SYMBOL +(char)(96+((byte)letter-48)));
+                } else if (isBigLetter(letter)) {
+                    text[i] = text[i].replace(String.valueOf(letter), UPPER_CASE_SYMBOL + String.valueOf(letter).toLowerCase());
                 }
             }
             for (String key : wordToBraile.keySet()) {
-                if (text[i].equals(key)) {
+                if (text[i].toLowerCase().equals(key)) {
                     text[i] = String.valueOf(wordToBraile.get(key));
                 }
             }
@@ -143,5 +149,10 @@ public class Main {
             }
         }
         return text;
+    }
+
+    // 65-90 big letters in ANSCII table
+    public static boolean isBigLetter(char letter){
+        return letter > 65 && letter < 90;
     }
 }
