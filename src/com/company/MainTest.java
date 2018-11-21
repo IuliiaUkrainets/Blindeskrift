@@ -61,4 +61,22 @@ public class MainTest {
             }
         }
     }
+
+    @Test
+    public void testBigLetterFilter(){
+        Main main = mock(Main.class);
+
+        when(main.readInputFile("input.txt")).thenReturn("The end 7");
+
+        String[] text = main.readInputFile("input.txt").split(" ");
+        String[] filtered = Main.filter(text);
+        String value = String.join(" ", filtered);
+        for (char c : value.toCharArray()) {
+            if (!Character.isLowerCase(c)) {
+                fail();
+            }
+        }
+    }
+
+
 }

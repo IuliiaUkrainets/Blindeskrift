@@ -92,7 +92,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println(new Character((char) 10286));
-        new Main().writeOutputFile("test", String.valueOf((char) 10286));
+
+        String[] text = new Main().readInputFile("input.txt").split(" ");
+        new Main().writeOutputFile("test", String.join(" ",filter(text)));
     }
 
     public String readInputFile(String path) {
